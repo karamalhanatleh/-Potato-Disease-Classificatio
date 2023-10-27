@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Image Classification App</title>
+    <style>
+        body {
+            background-image: url('https://agricultural.faharas.net/wp-content/uploads/2023/06/Potato-virus-X-630x300.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+        }
+
+        form {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            border: none;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Style the result text */
+        #result {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Image Classification</h1>
+    
+    <form action="/classify" method="post" enctype="multipart/form-data">
+        <input type="file" name="image">
+        <button type="submit">Classify</button>
+    </form>
+
+    <!-- Display classification results here -->
+    <div id="result"></div>
+
+    <script>
+        // JavaScript code to handle the classification results
+        const resultDiv = document.getElementById('result');
+        const form = document.querySelector('form');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+
+            // Make an AJAX request to classify the image
+            const response = await fetch('/classify', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (response.ok) {
+                const resultData = await response.text(); // Assuming the result is sent as plain text
+                // Display the classification result in the resultDiv
+                resultDiv.innerText = `Result: ${resultData}`;
+            } else {
+                resultDiv.innerText = 'Error classifying the image';
+            }
+        });
+    </script>
+</body>
+</html>
