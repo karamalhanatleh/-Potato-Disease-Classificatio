@@ -1,2 +1,2 @@
-# -Potato-Disease-Classificatio
- Potato Disease Classificatio
+# -Potato-Disease-Classification
+-Potato-Disease-Classification
